@@ -5,137 +5,138 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Forge</title>
+<title>Trackwell</title>
 <style>
 :root {
-  --bg:#0F0F0F;--bg2:#1A1A1A;--bg3:#242424;--bg4:#2E2E2E;
-  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
-  --text:#F0EDE8;--text2:#A09A92;--text3:#6B6560;
-  --protein:#E8A87C;--pbg:rgba(232,168,124,0.12);
-  --calories:#7EC8A8;--cbg:rgba(126,200,168,0.12);
-  --carbs:#7EAEE8;--kbg:rgba(126,174,232,0.12);
-  --fat:#C47EE8;--fbg:rgba(196,126,232,0.12);
-  --accent:#E8A87C;--danger:#E87C7C;--gold:#F0C060;--gbg:rgba(240,192,96,0.12);
-  --r:14px;--rs:8px;--sb:env(safe-area-inset-bottom,20px);
+  --bg:#F5F3EF;--bg2:#FFFFFF;--bg3:#F0EDE8;--bg4:#E8E4DE;
+  --border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.11);
+  --text:#1A1714;--text2:#6B6358;--text3:#A09890;
+  --protein:#C4622D;--pbg:rgba(196,98,45,0.09);
+  --calories:#2D8A5E;--cbg:rgba(45,138,94,0.09);
+  --carbs:#3B72B0;--kbg:rgba(59,114,176,0.09);
+  --fat:#7B5EA7;--fbg:rgba(123,94,167,0.09);
+  --accent:#C4622D;--danger:#C0392B;--gold:#B8860B;--gbg:rgba(184,134,11,0.1);
+  --shadow:0 1px 4px rgba(0,0,0,0.07), 0 2px 12px rgba(0,0,0,0.05);
+  --r:14px;--rs:10px;--sb:env(safe-area-inset-bottom,20px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF Pro Text','Helvetica Neue',sans-serif;min-height:100vh;overscroll-behavior:none;}
-.nav{position:sticky;top:0;z-index:100;background:rgba(15,15,15,0.92);backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:14px 20px;}
-.nav-logo{font-size:20px;font-weight:700;letter-spacing:-0.5px;color:var(--accent);}
+.nav{position:sticky;top:0;z-index:100;background:rgba(245,243,239,0.94);backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:14px 20px;}
+.nav-logo{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:var(--accent);}
 .nav-date{font-size:13px;color:var(--text2);}
 .tabs{display:flex;border-bottom:0.5px solid var(--border);background:var(--bg);position:sticky;top:53px;z-index:99;}
-.tab{flex:1;padding:12px 4px;text-align:center;font-size:12px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;letter-spacing:0.3px;text-transform:uppercase;}
+.tab{flex:1;padding:11px 2px;text-align:center;font-size:11px;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;letter-spacing:0.2px;text-transform:uppercase;}
 .tab.active{color:var(--accent);border-bottom-color:var(--accent);}
 .page{display:none;padding:0 0 calc(80px + var(--sb)) 0;}
 .page.active{display:block;}
 /* PROTEIN HERO */
-.phero{margin:16px 16px 0;background:var(--pbg);border:0.5px solid rgba(232,168,124,0.25);border-radius:var(--r);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
-.ph-label{font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--protein);margin-bottom:4px;}
-.ph-stat{font-size:32px;font-weight:800;color:var(--protein);letter-spacing:-1px;line-height:1;}
+.phero{margin:16px 16px 0;background:var(--pbg);border:1px solid rgba(196,98,45,0.15);border-radius:var(--r);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow);}
+.ph-label{font-size:11px;text-transform:uppercase;letter-spacing:0.9px;color:var(--protein);margin-bottom:4px;font-weight:600;}
+.ph-stat{font-size:34px;font-weight:800;color:var(--protein);letter-spacing:-1px;line-height:1;}
 .ph-sub{font-size:13px;color:var(--text2);margin-top:4px;}
 .pring{position:relative;width:64px;height:64px;flex-shrink:0;}
 .pring svg{transform:rotate(-90deg);}
 .pring-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--protein);}
 /* MACRO GRID */
-.mcard{margin:12px 16px 0;background:var(--bg2);border-radius:var(--r);border:0.5px solid var(--border);padding:16px;}
+.mcard{margin:12px 16px 0;background:var(--bg2);border-radius:var(--r);border:1px solid var(--border);padding:16px;box-shadow:var(--shadow);}
 .mcard-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.mcard-title{font-size:13px;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;}
-.reset-btn{font-size:12px;color:var(--text3);cursor:pointer;padding:4px 8px;border:0.5px solid var(--border2);border-radius:6px;}
+.mcard-title{font-size:13px;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;font-weight:600;}
+.reset-btn{font-size:12px;color:var(--text3);cursor:pointer;padding:4px 10px;border:1px solid var(--border2);border-radius:20px;font-weight:500;}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .mi{border-radius:var(--rs);padding:12px;}
-.mi-label{font-size:11px;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:5px;}
+.mi-label{font-size:10px;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:5px;font-weight:700;}
 .mi-vals{display:flex;align-items:baseline;gap:4px;margin-bottom:7px;}
-.mi-cur{font-size:20px;font-weight:700;}
+.mi-cur{font-size:20px;font-weight:800;}
 .mi-tgt{font-size:12px;color:var(--text2);}
-.bar-track{height:4px;background:var(--bg4);border-radius:2px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:2px;transition:width 0.6s cubic-bezier(0.16,1,0.3,1);}
+.bar-track{height:5px;background:rgba(0,0,0,0.08);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;transition:width 0.6s cubic-bezier(0.16,1,0.3,1);}
 .mi.cal{background:var(--cbg);} .mi.cal .mi-label,.mi.cal .mi-cur{color:var(--calories);} .mi.cal .bar-fill{background:var(--calories);}
 .mi.crb{background:var(--kbg);} .mi.crb .mi-label,.mi.crb .mi-cur{color:var(--carbs);} .mi.crb .bar-fill{background:var(--carbs);}
 .mi.fat{background:var(--fbg);} .mi.fat .mi-label,.mi.fat .mi-cur{color:var(--fat);} .mi.fat .bar-fill{background:var(--fat);}
-.mi.pro{background:rgba(232,168,124,0.18);} .mi.pro .mi-label,.mi.pro .mi-cur{color:var(--protein);} .mi.pro .bar-fill{background:var(--protein);}
+.mi.pro{background:var(--pbg);} .mi.pro .mi-label,.mi.pro .mi-cur{color:var(--protein);} .mi.pro .bar-fill{background:var(--protein);}
 /* FOOD SEARCH */
 .fsec{margin:12px 16px 0;}
-.slabel{font-size:13px;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;}
-.sbox{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);overflow:hidden;}
+.slabel{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;font-weight:700;}
+.sbox{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);}
 .srow{display:flex;align-items:center;}
 .sicon{padding:0 14px;color:var(--text3);font-size:18px;flex-shrink:0;}
 .sinput{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:16px;padding:14px 0;font-family:inherit;}
 .sinput::placeholder{color:var(--text3);}
-.sbtn{background:var(--accent);color:#1A0E05;font-size:13px;font-weight:700;border:none;padding:0 18px;cursor:pointer;height:52px;}
-.sbtn:active{opacity:0.8;}
+.sbtn{background:var(--accent);color:#FFF;font-size:13px;font-weight:700;border:none;padding:0 18px;cursor:pointer;height:52px;}
+.sbtn:active{opacity:0.85;}
 .sbtn.ld{opacity:0.6;pointer-events:none;}
-.sresults{border-top:0.5px solid var(--border);}
-.sri{padding:12px 16px;border-bottom:0.5px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.sresults{border-top:1px solid var(--border);}
+.sri{padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg2);}
 .sri:last-child{border-bottom:none;}
 .sri:active{background:var(--bg3);}
-.sri-name{font-size:14px;font-weight:500;flex:1;min-width:0;}
+.sri-name{font-size:14px;font-weight:500;flex:1;min-width:0;color:var(--text);}
 .sri-meta{font-size:11px;color:var(--text3);white-space:nowrap;margin-left:4px;}
 .sri-pills{display:flex;gap:5px;margin-top:4px;flex-wrap:wrap;}
-.pill{font-size:11px;padding:2px 6px;border-radius:4px;font-weight:600;}
+.pill{font-size:11px;padding:3px 8px;border-radius:20px;font-weight:600;}
 .sempty{padding:18px 16px;text-align:center;color:var(--text3);font-size:13px;}
 /* SERVING PICKER */
-.spicker{padding:14px 16px;border-top:0.5px solid var(--border);background:var(--bg3);}
-.sp-name{font-size:14px;font-weight:600;margin-bottom:10px;}
+.spicker{padding:14px 16px;border-top:1px solid var(--border);background:var(--bg3);}
+.sp-name{font-size:14px;font-weight:600;margin-bottom:10px;color:var(--text);}
 .sp-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .sp-lbl{font-size:13px;color:var(--text2);white-space:nowrap;}
-.sp-num{background:var(--bg4);border:0.5px solid var(--border2);border-radius:8px;padding:8px 10px;color:var(--text);font-size:15px;width:72px;text-align:center;outline:none;font-family:inherit;}
+.sp-num{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:8px 10px;color:var(--text);font-size:15px;width:72px;text-align:center;outline:none;font-family:inherit;}
 .sp-unit{font-size:13px;color:var(--text2);}
 .sp-prev{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
-.sp-add{width:100%;background:var(--accent);color:#1A0E05;font-size:14px;font-weight:700;border:none;border-radius:10px;padding:13px;cursor:pointer;}
+.sp-add{width:100%;background:var(--accent);color:#FFF;font-size:14px;font-weight:700;border:none;border-radius:10px;padding:13px;cursor:pointer;}
 .sp-add:active{opacity:0.85;}
 /* FOOD LOG */
 .flog{margin:12px 16px 0;}
-.fentry{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rs);padding:12px 14px;margin-bottom:7px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.fentry{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:12px 14px;margin-bottom:8px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;box-shadow:var(--shadow);}
 .fe-left{flex:1;min-width:0;}
-.fe-name{font-size:14px;font-weight:500;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fe-name{font-size:14px;font-weight:600;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);}
 .fe-macros{display:flex;gap:5px;flex-wrap:wrap;}
 .fe-time{font-size:11px;color:var(--text3);}
 .fe-del{color:var(--text3);font-size:16px;cursor:pointer;padding:2px;flex-shrink:0;}
 .fe-del:active{color:var(--danger);}
 .empty{text-align:center;padding:28px 24px;color:var(--text3);}
-.empty-icon{font-size:34px;margin-bottom:8px;opacity:0.35;}
+.empty-icon{font-size:34px;margin-bottom:8px;opacity:0.4;}
 /* AI opt-in */
 .ai-section{margin:12px 16px 0;}
-.ai-btn{width:100%;background:var(--bg2);border:0.5px solid rgba(232,168,124,0.28);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;}
+.ai-btn{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;box-shadow:var(--shadow);}
 .ai-btn:active{background:var(--bg3);}
 .ai-btn-icon{font-size:20px;flex-shrink:0;}
-.ai-btn-label{font-size:14px;font-weight:500;color:var(--accent);}
+.ai-btn-label{font-size:14px;font-weight:600;color:var(--accent);}
 .ai-btn-sub{font-size:11px;color:var(--text3);margin-top:2px;}
-.ai-badge{background:rgba(232,168,124,0.14);color:var(--accent);font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:0.5px;margin-left:auto;flex-shrink:0;}
+.ai-badge{background:var(--pbg);color:var(--accent);font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;letter-spacing:0.5px;margin-left:auto;flex-shrink:0;border:1px solid rgba(196,98,45,0.2);}
 .reco-out{margin-top:10px;}
-.rcard{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:8px;}
+.rcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:8px;box-shadow:var(--shadow);}
 .rcard-hd{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.rcard-title{font-size:14px;font-weight:600;}
+.rcard-title{font-size:14px;font-weight:700;color:var(--text);}
 .rcard-body{font-size:13px;color:var(--text2);line-height:1.6;}
-.rmeals{margin-top:10px;display:flex;flex-direction:column;gap:7px;}
-.rmeal{background:var(--bg3);border-radius:var(--rs);padding:11px;}
-.rmeal-name{font-size:13px;font-weight:500;margin-bottom:3px;}
+.rmeals{margin-top:10px;display:flex;flex-direction:column;gap:8px;}
+.rmeal{background:var(--bg3);border-radius:var(--rs);padding:12px;}
+.rmeal-name{font-size:13px;font-weight:600;margin-bottom:3px;color:var(--text);}
 .rmeal-detail{font-size:12px;color:var(--text2);}
-.rmeal-pills{display:flex;gap:5px;margin-top:5px;}
+.rmeal-pills{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;}
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:-3px;margin-right:6px;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.divider{height:0.5px;background:var(--border);margin:12px 16px 0;}
+.divider{height:1px;background:var(--border);margin:12px 16px 0;}
 /* WORKOUT */
 .shero{margin:16px 16px 0;}
-.sbanner{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:18px;display:flex;align-items:center;gap:16px;}
+.sbanner{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow);}
 .sfw{position:relative;flex-shrink:0;}
 .sf{font-size:44px;line-height:1;}
-.sn{position:absolute;bottom:-2px;right:-6px;background:var(--gold);color:#1A0E05;font-size:12px;font-weight:800;border-radius:10px;padding:1px 6px;min-width:20px;text-align:center;}
+.sn{position:absolute;bottom:-2px;right:-6px;background:var(--gold);color:#FFF;font-size:12px;font-weight:800;border-radius:10px;padding:1px 6px;min-width:20px;text-align:center;}
 .sinfo{flex:1;}
-.slbl2{font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text3);margin-bottom:3px;}
+.slbl2{font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text3);margin-bottom:3px;font-weight:600;}
 .sweeks{font-size:24px;font-weight:800;color:var(--gold);letter-spacing:-0.5px;line-height:1;}
 .ssub{font-size:12px;color:var(--text2);margin-top:3px;}
-.pbtn{background:var(--bg3);border:0.5px solid var(--border2);border-radius:8px;padding:8px 10px;font-size:11px;color:var(--text2);cursor:pointer;text-align:center;line-height:1.5;flex-shrink:0;}
+.pbtn{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:8px 10px;font-size:11px;color:var(--text2);cursor:pointer;text-align:center;line-height:1.5;flex-shrink:0;}
 .pbtn.used{opacity:0.35;pointer-events:none;}
-.wcard{margin:10px 16px 0;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:18px;}
+.wcard{margin:10px 16px 0;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);}
 .wcard-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.wcard-title{font-size:14px;font-weight:600;}
+.wcard-title{font-size:14px;font-weight:700;color:var(--text);}
 .wcard-dates{font-size:12px;color:var(--text3);}
 .wrings{display:flex;justify-content:space-between;margin-bottom:16px;}
 .dcol{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;}
-.dlbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.4px;}
-.ddot{width:34px;height:34px;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s;background:var(--bg3);font-size:15px;}
-.ddot.done{background:var(--gbg);border-color:var(--gold);}
+.dlbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.4px;font-weight:600;}
+.ddot{width:36px;height:36px;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s;background:var(--bg3);font-size:15px;color:var(--text);}
+.ddot.done{background:var(--gbg);border-color:var(--gold);color:var(--gold);}
 .ddot.today{border-color:var(--accent);}
 .ddot.past{opacity:0.4;}
 .ddot:active{transform:scale(0.88);}
@@ -147,83 +148,80 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF P
 .wbar-lbl{font-size:12px;color:var(--text2);white-space:nowrap;min-width:56px;text-align:right;}
 .wnudge{margin-top:8px;font-size:13px;color:var(--text3);text-align:center;min-height:18px;}
 .msec{margin:12px 16px 0;}
-.ms-title{font-size:13px;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;}
-.mrow{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rs);padding:12px 14px;margin-bottom:7px;display:flex;align-items:center;gap:12px;}
-.mrow.unl{border-color:rgba(240,192,96,0.3);background:var(--gbg);}
-.mrow.nxt{border-color:rgba(240,192,96,0.15);}
+.ms-title{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;font-weight:700;}
+.mrow{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:12px 14px;margin-bottom:7px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow);}
+.mrow.unl{border-color:rgba(184,134,11,0.25);background:var(--gbg);}
+.mrow.nxt{border-color:rgba(184,134,11,0.15);}
 .micon{font-size:22px;width:30px;text-align:center;flex-shrink:0;}
 .minfo{flex:1;}
-.mname{font-size:13px;font-weight:500;}
+.mname{font-size:13px;font-weight:600;color:var(--text);}
 .mname.g{color:var(--gold);}
 .mdesc{font-size:11px;color:var(--text2);margin-top:2px;}
 .mbadge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:10px;white-space:nowrap;flex-shrink:0;}
 .mbadge.d{background:var(--gbg);color:var(--gold);}
-.mbadge.n{background:rgba(240,192,96,0.1);color:var(--gold);}
-.mbadge.l{background:var(--bg4);color:var(--text3);}
+.mbadge.n{background:rgba(184,134,11,0.1);color:var(--gold);}
+.mbadge.l{background:var(--bg3);color:var(--text3);}
 .wlog{margin:12px 16px 0;}
 .wrow{display:flex;gap:8px;align-items:stretch;}
-.wwrap{flex:1;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);overflow:hidden;}
+.wwrap{flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);}
 .winput{width:100%;background:transparent;border:none;outline:none;color:var(--text);font-size:15px;padding:14px;resize:none;font-family:inherit;min-height:58px;}
 .winput::placeholder{color:var(--text3);}
-.wadd{background:var(--accent);color:#1A0E05;font-size:13px;font-weight:700;border:none;border-radius:var(--r);padding:0 16px;cursor:pointer;min-width:56px;}
+.wadd{background:var(--accent);color:#FFF;font-size:13px;font-weight:700;border:none;border-radius:var(--r);padding:0 16px;cursor:pointer;min-width:56px;}
 .wadd:active{opacity:0.8;}
 .wentries{margin-top:8px;display:flex;flex-direction:column;gap:7px;}
-.wentry{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rs);padding:11px 13px;display:flex;align-items:center;gap:10px;}
+.wentry{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:11px 13px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);}
 .we-left{flex:1;}
-.we-name{font-size:13px;font-weight:500;}
+.we-name{font-size:13px;font-weight:600;color:var(--text);}
 .we-detail{font-size:12px;color:var(--text2);margin-top:2px;}
 .we-del{color:var(--text3);font-size:15px;cursor:pointer;padding:3px;}
 .we-del:active{color:var(--danger);}
-.suggcard{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rs);padding:12px 14px;margin-bottom:7px;}
-.sc-name{font-size:13px;font-weight:500;margin-bottom:3px;}
+.suggcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:12px 14px;margin-bottom:7px;box-shadow:var(--shadow);}
+.sc-name{font-size:13px;font-weight:600;margin-bottom:3px;color:var(--text);}
 .sc-sets{font-size:12px;color:var(--text3);}
 .sc-detail{font-size:12px;color:var(--text2);margin-top:4px;line-height:1.5;}
 .sc-warn{font-size:11px;color:var(--danger);margin-top:4px;}
-/* BODY / COMING SOON */
-.cs{margin:40px 16px;text-align:center;}
-.cs-badge{display:inline-block;background:var(--bg3);border:0.5px solid var(--border2);border-radius:20px;padding:4px 12px;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:14px;}
-.cs-title{font-size:22px;font-weight:700;margin-bottom:8px;}
-.cs-text{font-size:14px;color:var(--text2);line-height:1.6;}
-.cs-list{margin-top:20px;text-align:left;}
-.cs-item{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:0.5px solid var(--border);}
-.cs-item:last-child{border-bottom:none;}
-.cs-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:5px;flex-shrink:0;}
-.cs-item-text{font-size:13px;color:var(--text2);line-height:1.5;}
 /* SETTINGS */
 .stsec{margin:16px;}
-.stcard{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;}
-.strow{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:0.5px solid var(--border);}
+.stcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow);}
+.strow{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--border);}
 .strow:last-child{border-bottom:none;}
-.stlbl{font-size:14px;}
+.stlbl{font-size:14px;color:var(--text);}
 .stval{font-size:14px;color:var(--text2);}
 .stinput{background:transparent;border:none;outline:none;color:var(--text2);font-size:14px;text-align:right;width:80px;font-family:inherit;}
-.st-section{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;padding-left:2px;}
+.st-section{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;padding-left:2px;font-weight:700;}
 .pavatarwrap{display:flex;flex-direction:column;align-items:center;margin-bottom:18px;}
 .pavatar{width:60px;height:60px;border-radius:50%;background:var(--pbg);border:2px solid var(--protein);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:10px;}
-.pname{font-size:19px;font-weight:700;margin-bottom:3px;}
+.pname{font-size:19px;font-weight:800;margin-bottom:3px;color:var(--text);}
 .psub{font-size:13px;color:var(--text2);}
-.api-in{width:100%;background:var(--bg3);border:0.5px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:monospace;outline:none;}
-.save-btn{width:100%;background:var(--accent);color:#1A0E05;font-size:15px;font-weight:700;border:none;border-radius:10px;padding:14px;cursor:pointer;margin-top:6px;}
+.api-in{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:monospace;outline:none;}
+.save-btn{width:100%;background:var(--accent);color:#FFF;font-size:15px;font-weight:700;border:none;border-radius:10px;padding:14px;cursor:pointer;margin-top:6px;}
 .save-btn:active{opacity:0.85;}
-.ptag{display:inline-flex;align-items:center;gap:3px;background:var(--pbg);border:0.5px solid var(--protein);border-radius:20px;padding:4px 9px;font-size:12px;color:var(--protein);margin:3px;}
+.ptag{display:inline-flex;align-items:center;gap:3px;background:var(--pbg);border:1px solid rgba(196,98,45,0.2);border-radius:20px;padding:4px 9px;font-size:12px;color:var(--protein);margin:3px;font-weight:600;}
 /* CELEBRATION */
-.celeb{position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.celeb{position:fixed;inset:0;background:rgba(245,243,239,0.96);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;opacity:0;pointer-events:none;transition:opacity 0.3s;}
 .celeb.show{opacity:1;pointer-events:all;}
 .celeb-e{font-size:68px;margin-bottom:14px;animation:bi 0.5s cubic-bezier(0.16,1.5,0.3,1);}
 @keyframes bi{0%{transform:scale(0)}100%{transform:scale(1)}}
 .celeb-t{font-size:26px;font-weight:800;color:var(--gold);margin-bottom:8px;}
 .celeb-s{font-size:15px;color:var(--text2);line-height:1.5;margin-bottom:24px;}
-.celeb-c{background:var(--accent);color:#1A0E05;font-size:15px;font-weight:700;border:none;border-radius:12px;padding:13px 36px;cursor:pointer;}
+.celeb-c{background:var(--accent);color:#FFF;font-size:15px;font-weight:700;border:none;border-radius:12px;padding:13px 36px;cursor:pointer;}
+/* PANTRY */
+.pantry-tag{display:inline-flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:7px 12px;font-size:13px;color:var(--text);box-shadow:var(--shadow);font-weight:500;}
+.pantry-tag-del{color:var(--text3);cursor:pointer;font-size:15px;line-height:1;}
+.pantry-tag-del:active{color:var(--danger);}
+.recipe-link{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:20px;text-decoration:none;color:var(--text2);font-size:12px;font-weight:600;}
+.recipe-link:active{opacity:0.7;}
 /* TOAST */
-.toast{position:fixed;bottom:calc(80px + var(--sb) + 10px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--bg3);border:0.5px solid var(--border2);border-radius:20px;padding:9px 18px;font-size:13px;color:var(--text);opacity:0;transition:all 0.25s;z-index:999;white-space:nowrap;pointer-events:none;}
+.toast{position:fixed;bottom:calc(80px + var(--sb) + 10px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--text);border-radius:20px;padding:9px 18px;font-size:13px;color:var(--bg);opacity:0;transition:all 0.25s;z-index:999;white-space:nowrap;pointer-events:none;font-weight:500;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
 
-<div class="nav"><div class="nav-logo">FORGE</div><div class="nav-date" id="navDate"></div></div>
+<div class="nav"><div class="nav-logo">TRACKWELL</div><div class="nav-date" id="navDate"></div></div>
 <div class="tabs">
   <div class="tab active" onclick="switchTab('nutrition')">Nutrition</div>
+  <div class="tab" onclick="switchTab('pantry')">Pantry</div>
   <div class="tab" onclick="switchTab('body')">Body</div>
   <div class="tab" onclick="switchTab('workout')">Workout</div>
   <div class="tab" onclick="switchTab('settings')">Settings</div>
@@ -235,8 +233,8 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF P
     <div><div class="ph-label">Protein — Priority</div><div class="ph-stat" id="proStat">0g</div><div class="ph-sub" id="proSub">of 175g daily goal</div></div>
     <div class="pring">
       <svg width="64" height="64" viewBox="0 0 64 64">
-        <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(232,168,124,0.15)" stroke-width="5"/>
-        <circle cx="32" cy="32" r="26" fill="none" stroke="#E8A87C" stroke-width="5" stroke-linecap="round" stroke-dasharray="163.36" id="proArc" stroke-dashoffset="163.36" style="transition:stroke-dashoffset 0.8s cubic-bezier(0.16,1,0.3,1);"/>
+        <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(196,98,45,0.15)" stroke-width="5"/>
+        <circle cx="32" cy="32" r="26" fill="none" stroke="#C4622D" stroke-width="5" stroke-linecap="round" stroke-dasharray="163.36" id="proArc" stroke-dashoffset="163.36" style="transition:stroke-dashoffset 0.8s cubic-bezier(0.16,1,0.3,1);"/>
       </svg>
       <div class="pring-pct" id="proPct">0%</div>
     </div>
@@ -291,17 +289,60 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF P
   </div>
 </div>
 
+<!-- PANTRY -->
+<div class="page" id="page-pantry">
+  <!-- ADD ITEM -->
+  <div class="fsec">
+    <div class="slabel">My pantry</div>
+    <div class="sbox">
+      <div class="srow">
+        <div class="sicon">+</div>
+        <input class="sinput" id="pantryInput" type="text" placeholder="Add an ingredient — e.g. chicken breast, Greek yogurt…" autocomplete="off">
+        <button class="sbtn" onclick="addPantryItem()" style="border-radius:0">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANTRY ITEMS -->
+  <div style="margin:12px 16px 0;">
+    <div id="pantryEmpty" class="empty" style="padding:24px"><div class="empty-icon">🥦</div><div style="font-size:14px">Add ingredients you have at home</div></div>
+    <div id="pantryItems" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+  </div>
+
+  <!-- RECIPE FINDER -->
+  <div style="margin:16px 16px 0;">
+    <div class="ai-btn" onclick="findPantryRecipes()" id="pantryRecoBtn">
+      <div class="ai-btn-icon">✦</div>
+      <div><div class="ai-btn-label">Find recipes from my pantry</div><div class="ai-btn-sub" id="pantryBtnSub">Add ingredients above then tap to find recipes</div></div>
+      <div class="ai-badge">AI</div>
+    </div>
+    <div id="pantryRecoOut" style="margin-top:10px;"></div>
+  </div>
+</div>
+
 <!-- BODY -->
 <div class="page" id="page-body">
-  <div class="cs">
-    <div class="cs-badge">Phase 2 — Coming next</div>
-    <div class="cs-title">Body composition journey</div>
-    <div class="cs-text">Track your transformation with detailed metrics and trend charts.</div>
-    <div class="cs-list">
-      <div class="cs-item"><div class="cs-dot"></div><div class="cs-item-text">Weight log with trend line and 30/90-day charts</div></div>
-      <div class="cs-item"><div class="cs-dot"></div><div class="cs-item-text">Body measurements — waist, chest, arms, and more</div></div>
-      <div class="cs-item"><div class="cs-dot"></div><div class="cs-item-text">Ankle mobility and movement quality over time</div></div>
-      <div class="cs-item"><div class="cs-dot"></div><div class="cs-item-text">Insights connecting body metrics to nutrition and workout data</div></div>
+  <div style="margin:40px 16px;text-align:center;">
+    <div style="display:inline-block;background:var(--bg3);border:1px solid var(--border2);border-radius:20px;padding:4px 12px;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:14px;">Phase 2 — Coming next</div>
+    <div style="font-size:22px;font-weight:800;margin-bottom:8px;color:var(--text);">Body composition journey</div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.6;">Track your transformation with detailed metrics and trend charts.</div>
+    <div style="margin-top:20px;text-align:left;">
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--border);">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:5px;flex-shrink:0;"></div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.5;">Weight log with trend line and 30/90-day charts</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--border);">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:5px;flex-shrink:0;"></div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.5;">Body measurements — waist, chest, arms, and more</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--border);">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:5px;flex-shrink:0;"></div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.5;">Ankle mobility and movement quality over time</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 0;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:5px;flex-shrink:0;"></div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.5;">Smart insights connecting body metrics to nutrition and workout data</div>
+      </div>
     </div>
   </div>
 </div>
@@ -567,21 +608,105 @@ function addLogEntry(entry){
   document.getElementById('searchResults').style.display='none';
 }
 
-// AI RECOMMENDATIONS
+// AI RECOMMENDATIONS with recipe links
 async function fetchRecos(){
   const k=claudeKey();if(!k){showToast('Add Anthropic API key in Settings first');return;}
   const t=totals();
   const rem={cal:Math.max(0,targets.calories-t.calories),pro:Math.max(0,targets.protein-t.protein),carb:Math.max(0,targets.carbs-t.carbs),fat:Math.max(0,targets.fat-t.fat)};
   const tp=Object.entries(prefs).sort((a,b)=>b[1]-a[1]).slice(0,10).map(e=>e[0]).join(', ');
+  const pantryList=pantry.join(', ')||'not specified';
   document.getElementById('recoOut').innerHTML='<div style="padding:14px 0;color:var(--text3);font-size:13px"><span class="spinner"></span>Analysing your day…</div>';
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:800,system:'Nutrition coach, 38M on GLP-1, 6\'1" 220 lbs, fat loss + muscle preservation. Protein is #1 priority. Return ONLY JSON: insight (1 sentence max 110 chars), meals (array 2 items: name, description max 55 chars, protein number, calories number, reason max 70 chars). No markdown.',messages:[{role:'user',content:`Eaten: ${todayLog.map(e=>e.name).join(', ')||'nothing yet'}. Remaining: ${rem.cal} cal, ${rem.pro}g protein, ${rem.carb}g carbs, ${rem.fat}g fat. Prefers: ${tp||'unknown'}.`}]})});
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:900,system:'Nutrition coach, 38M on GLP-1, 6\'1" 220 lbs, fat loss + muscle preservation. Protein is the #1 priority — always suggest meals that best close the remaining macro gaps for the day. If the user has pantry items listed, prefer suggestions that use those ingredients when they naturally fit, but never let pantry availability override macro priorities — the best macro match always wins. Return ONLY JSON: insight (1 sentence max 110 chars), meals (array 2 items: name string, description max 55 chars, protein number, calories number, reason max 70 chars, uses_pantry boolean (true if this uses pantry ingredients), recipe_search string (specific Google search query to find this recipe on AllRecipes or similar)). No markdown.',messages:[{role:'user',content:`Eaten: ${todayLog.map(e=>e.name).join(', ')||'nothing yet'}. Remaining: ${rem.cal} cal, ${rem.pro}g protein, ${rem.carb}g carbs, ${rem.fat}g fat. Food preferences: ${tp||'unknown'}. Pantry available (use if it fits, not required): ${pantryList}.`}]})});
     const d=await res.json();
     const data=JSON.parse(d.content[0].text.replace(/```json|```/g,'').trim());
     let html=`<div class="rcard" style="margin-top:10px"><div class="rcard-hd"><div style="font-size:18px">💡</div><div class="rcard-title">Today so far</div></div><div class="rcard-body">${data.insight}</div></div><div class="rcard"><div class="rcard-hd"><div style="font-size:18px">🍽</div><div class="rcard-title">Eat next</div></div><div class="rmeals">`;
-    (data.meals||[]).forEach(m=>{html+=`<div class="rmeal"><div class="rmeal-name">${m.name}</div><div class="rmeal-detail">${m.description}</div><div class="rmeal-pills"><span class="pill" style="background:var(--pbg);color:var(--protein)">${Math.round(m.protein)}g protein</span><span class="pill" style="background:var(--cbg);color:var(--calories)">${Math.round(m.calories)} cal</span></div><div style="font-size:11px;color:var(--text3);margin-top:4px">${m.reason}</div></div>`;});
+    (data.meals||[]).forEach(m=>{
+      const arUrl='https://www.allrecipes.com/search?q='+encodeURIComponent(m.name);
+      const gUrl='https://www.google.com/search?q='+encodeURIComponent(m.recipe_search||m.name+' recipe');
+      html+=`<div class="rmeal">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:3px;">
+          <div class="rmeal-name">${m.name}</div>
+          ${m.uses_pantry?'<span style="font-size:10px;background:rgba(126,200,168,0.15);color:var(--calories);padding:2px 7px;border-radius:10px;font-weight:600;white-space:nowrap;">🥦 pantry</span>':''}
+        </div>
+        <div class="rmeal-detail">${m.description}</div>
+        <div class="rmeal-pills">
+          <span class="pill" style="background:var(--pbg);color:var(--protein)">${Math.round(m.protein)}g protein</span>
+          <span class="pill" style="background:var(--cbg);color:var(--calories)">${Math.round(m.calories)} cal</span>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px">${m.reason}</div>
+        <div style="display:flex;gap:7px;margin-top:8px;">
+          <a class="recipe-link" href="${arUrl}" target="_blank">📖 AllRecipes</a>
+          <a class="recipe-link" href="${gUrl}" target="_blank" style="color:var(--text2);">🔍 More recipes</a>
+        </div>
+      </div>`;
+    });
     html+='</div></div>';document.getElementById('recoOut').innerHTML=html;
   }catch(e){document.getElementById('recoOut').innerHTML='<div style="padding:12px 0;color:var(--text3);font-size:13px">Could not load — check your API key in Settings.</div>';}
+}
+
+// PANTRY
+let pantry=gs('fg_pantry',[]);
+
+function renderPantry(){
+  const c=document.getElementById('pantryItems');
+  const empty=document.getElementById('pantryEmpty');
+  c.innerHTML='';
+  if(!pantry.length){empty.style.display='block';c.style.display='none';return;}
+  empty.style.display='none';c.style.display='flex';
+  pantry.forEach((item,i)=>{
+    const tag=document.createElement('div');tag.className='pantry-tag';
+    tag.innerHTML=`${item}<span class="pantry-tag-del" onclick="removePantryItem(${i})">×</span>`;
+    c.appendChild(tag);
+  });
+  document.getElementById('pantryBtnSub').textContent=pantry.length+' ingredient'+(pantry.length===1?'':'s')+' — tap to find matching recipes';
+}
+
+function addPantryItem(){
+  const input=document.getElementById('pantryInput');
+  const val=input.value.trim();if(!val)return;
+  const items=val.split(',').map(s=>s.trim()).filter(Boolean);
+  items.forEach(item=>{if(!pantry.includes(item))pantry.push(item);});
+  ss('fg_pantry',pantry);input.value='';renderPantry();
+  showToast(items.length>1?items.length+' items added':val+' added');
+}
+
+function removePantryItem(i){pantry.splice(i,1);ss('fg_pantry',pantry);renderPantry();}
+
+async function findPantryRecipes(){
+  const k=claudeKey();if(!k){showToast('Add Anthropic API key in Settings first');return;}
+  if(!pantry.length){showToast('Add some pantry items first');return;}
+  const btn=document.getElementById('pantryRecoBtn');
+  btn.style.opacity='0.6';btn.style.pointerEvents='none';
+  document.getElementById('pantryRecoOut').innerHTML='<div style="padding:14px 0;color:var(--text3);font-size:13px"><span class="spinner"></span>Finding recipes from your pantry…</div>';
+  const t=totals();
+  const rem={pro:Math.max(0,targets.protein-t.protein),cal:Math.max(0,targets.calories-t.calories)};
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,system:'You are a meal planning assistant for a 38M on GLP-1, focused on fat loss and muscle preservation. Protein is top priority. Given pantry ingredients, suggest high-protein meals that can be made primarily from those ingredients. Return ONLY JSON: recipes (array of 3 objects: name string, description max 60 chars, protein number, calories number, uses (array of pantry items this uses, max 4), missing (array of 1-2 simple extra items needed if any), recipe_search string for AllRecipes search, allrecipes_search string (exact dish name for allrecipes.com search)). No markdown.',messages:[{role:'user',content:`Pantry: ${pantry.join(', ')}. Still need today: ${rem.pro}g protein, ${rem.cal} cal. Suggest 3 recipes.`}]})});
+    const d=await res.json();
+    const data=JSON.parse(d.content[0].text.replace(/```json|```/g,'').trim());
+    let html='';
+    (data.recipes||[]).forEach(r=>{
+      const arUrl='https://www.allrecipes.com/search?q='+encodeURIComponent(r.allrecipes_search||r.name);
+      const gUrl='https://www.google.com/search?q='+encodeURIComponent(r.recipe_search||r.name+' recipe');
+      html+=`<div class="rcard" style="margin-bottom:8px;">
+        <div class="rmeal-name" style="font-size:14px;font-weight:600;margin-bottom:4px;">${r.name}</div>
+        <div class="rmeal-detail">${r.description}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:7px;">
+          <span class="pill" style="background:var(--pbg);color:var(--protein)">${Math.round(r.protein)}g protein</span>
+          <span class="pill" style="background:var(--cbg);color:var(--calories)">${Math.round(r.calories)} cal</span>
+        </div>
+        ${r.uses&&r.uses.length?`<div style="font-size:11px;color:var(--text3);margin-top:6px;">Uses: ${r.uses.join(', ')}</div>`:''}
+        ${r.missing&&r.missing.length?`<div style="font-size:11px;color:var(--text3);margin-top:2px;">Also need: ${r.missing.join(', ')}</div>`:''}
+        <div style="display:flex;gap:7px;margin-top:8px;">
+          <a class="recipe-link" href="${arUrl}" target="_blank">📖 AllRecipes</a>
+          <a class="recipe-link" href="${gUrl}" target="_blank" style="color:var(--text2);">🔍 More recipes</a>
+        </div>
+      </div>`;
+    });
+    document.getElementById('pantryRecoOut').innerHTML=html||'<div style="color:var(--text3);font-size:13px;padding:10px 0">No recipes found — try adding more ingredients.</div>';
+  }catch(e){document.getElementById('pantryRecoOut').innerHTML='<div style="color:var(--text3);font-size:13px;padding:10px 0">Could not load — check API key in Settings.</div>';}
+  btn.style.opacity='1';btn.style.pointerEvents='auto';
 }
 
 // WORKOUT
@@ -708,18 +833,19 @@ function renderPrefTags(){
   if(!top.length)return;
   a.innerHTML=top.map(([w,c])=>`<span class="ptag">${w} <span style="font-size:10px;opacity:0.6">×${c}</span></span>`).join('');
 }
-function switchTab(tab){document.querySelectorAll('.tab').forEach((t,i)=>{const ts=['nutrition','body','workout','settings'];t.classList.toggle('active',ts[i]===tab);});document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+tab).classList.add('active');}
+function switchTab(tab){document.querySelectorAll('.tab').forEach((t,i)=>{const ts=['nutrition','pantry','body','workout','settings'];t.classList.toggle('active',ts[i]===tab);});document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+tab).classList.add('active');}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);}
 
 // INIT
 document.getElementById('navDate').textContent=new Date().toLocaleDateString([],{weekday:'short',month:'short',day:'numeric'});
 const wkd=getWeekDates();document.getElementById('wkdates').textContent=wkd[0].toLocaleDateString([],{month:'short',day:'numeric'})+' – '+wkd[6].toLocaleDateString([],{month:'short',day:'numeric'});
-loadAll();updateNutritionUI();renderPrefTags();renderRings();renderStreakUI();renderWEntries();
+loadAll();updateNutritionUI();renderPrefTags();renderRings();renderStreakUI();renderWEntries();renderPantry();
 document.getElementById('stCal').value=targets.calories;document.getElementById('stPro').value=targets.protein;document.getElementById('stCarb').value=targets.carbs;document.getElementById('stFat').value=targets.fat;document.getElementById('stGoal').value=weeklyGoal;document.getElementById('stInj').value=injuries;
 if(claudeKey())document.getElementById('claudeSt').textContent='✓ Connected';
 if(localStorage.getItem('fg_usda_key'))document.getElementById('usdaSt').textContent='✓ Custom key set';
 const ep=Math.floor((streak.weeks||0)/4);if((streak.protects||0)<ep){streak.protects=ep;ss('fg_streak',streak);renderStreakUI();}
 document.getElementById('foodInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();lookupFood();}});
+document.getElementById('pantryInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addPantryItem();}});
 document.getElementById('wlinput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();logEx();}});
 </script>
 </body>
