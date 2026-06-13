@@ -254,12 +254,22 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF P
   <div class="fsec">
     <div class="slabel">Log food</div>
     <div class="sbox">
-      <textarea class="sinput" id="foodInput" placeholder="Describe what you ate — e.g. New Zealand whey vanilla shake with 8oz whole milk and a banana…" autocomplete="off" rows="2" style="padding:14px;min-height:64px;resize:none;width:100%;display:block;"></textarea>
+      <textarea class="sinput" id="foodInput" placeholder="Describe what you ate — e.g. New Zealand whey vanilla shake with 8oz whole milk…" autocomplete="off" rows="2" style="padding:14px;min-height:64px;resize:none;width:100%;display:block;"></textarea>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:0.5px solid var(--border);">
         <div style="font-size:12px;color:var(--text3)" id="logMode">AI lookup</div>
-        <button class="sbtn" id="logFoodBtn" onclick="logFood()" style="border-radius:8px;height:38px;padding:0 18px;">Log it</button>
+        <button class="sbtn" id="logFoodBtn" onclick="lookupFood()" style="border-radius:8px;height:38px;padding:0 18px;">Search</button>
       </div>
       <div id="searchResults" style="display:none"></div>
+      <!-- CONFIRM CARD -->
+      <div id="confirmCard" style="display:none;border-top:0.5px solid var(--border);padding:14px 16px;background:var(--bg3);">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.7px;color:var(--text3);margin-bottom:8px;">Looks right?</div>
+        <div style="font-size:15px;font-weight:600;margin-bottom:10px;" id="confirmName"></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;" id="confirmPills"></div>
+        <div style="display:flex;gap:8px;">
+          <button onclick="confirmLog()" style="flex:1;background:var(--accent);color:#1A0E05;font-size:14px;font-weight:700;border:none;border-radius:10px;padding:12px;cursor:pointer;">✓ Log it</button>
+          <button onclick="cancelLog()" style="flex:0;background:var(--bg4);color:var(--text2);font-size:14px;font-weight:600;border:none;border-radius:10px;padding:12px 16px;cursor:pointer;">Edit</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -465,30 +475,33 @@ function renderLog(){
 function delEntry(i){todayLog.splice(i,1);ss('fg_log_'+todayKey(),todayLog);updateNutritionUI();showToast('Removed');}
 function resetDay(){if(!confirm('Reset today\'s food log?'))return;todayLog=[];ss('fg_log_'+todayKey(),todayLog);updateNutritionUI();document.getElementById('recoOut').innerHTML='';showToast('Day reset');}
 
-// FOOD LOGGING — Claude default, USDA fallback
-async function logFood(){
+// FOOD LOGGING — Search first, confirm then log
+let pendingEntry = null;
+
+async function lookupFood(){
   const input=document.getElementById('foodInput');
   const text=input.value.trim();if(!text)return;
   const btn=document.getElementById('logFoodBtn');
   btn.textContent='…';btn.disabled=true;
+  document.getElementById('confirmCard').style.display='none';
+  document.getElementById('searchResults').style.display='none';
   const k=claudeKey();
   if(k){
-    // Claude path — handles natural language, combos, brands
     document.getElementById('logMode').textContent='Looking up with AI…';
     try{
       const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:300,system:'You are a nutrition database. The user describes food they ate — it may be a single item, a combination meal, or a branded product. Return ONLY a JSON object with: name (clean short name max 44 chars), calories (number), protein (grams, number), carbs (grams, number), fat (grams, number). Be accurate based on realistic serving sizes described. No markdown, no explanation, just the JSON.',messages:[{role:'user',content:text}]})});
       const d=await res.json();
       const data=JSON.parse(d.content[0].text.replace(/```json|```/g,'').trim());
-      addLogEntry({name:data.name||text,calories:parseFloat(data.calories)||0,protein:parseFloat(data.protein)||0,carbs:parseFloat(data.carbs)||0,fat:parseFloat(data.fat)||0});
-      input.value='';
+      pendingEntry={name:data.name||text,calories:parseFloat(data.calories)||0,protein:parseFloat(data.protein)||0,carbs:parseFloat(data.carbs)||0,fat:parseFloat(data.fat)||0};
+      showConfirm(pendingEntry);
       document.getElementById('logMode').textContent='AI lookup';
     }catch(e){
       document.getElementById('logMode').textContent='AI lookup';
       showToast('Could not look up — try again');
     }
   } else {
-    // USDA fallback — keyword search
-    document.getElementById('logMode').textContent='Searching USDA database…';
+    // USDA fallback
+    document.getElementById('logMode').textContent='Searching USDA…';
     const rd=document.getElementById('searchResults');
     rd.style.display='block';
     rd.innerHTML='<div class="sempty"><span class="spinner"></span>Searching…</div>';
@@ -497,28 +510,52 @@ async function logFood(){
       const res=await fetch(url);
       const data=await res.json();
       const foods=data.foods||[];
-      if(!foods.length){rd.innerHTML='<div class="sempty">No results — add your Anthropic API key in Settings for better lookup</div>';document.getElementById('logMode').textContent='AI lookup';btn.textContent='Log it';btn.disabled=false;return;}
-      rd.innerHTML='<div style="padding:10px 14px 6px;font-size:11px;color:var(--text3)">Tap a result to add it — or add your API key in Settings for smarter lookup</div>';
+      if(!foods.length){rd.innerHTML='<div class="sempty">No results — add your Anthropic API key in Settings for smarter lookup</div>';document.getElementById('logMode').textContent='AI lookup';btn.textContent='Search';btn.disabled=false;return;}
+      rd.innerHTML='<div style="padding:10px 14px 6px;font-size:11px;color:var(--text3)">Tap a result to confirm and log it</div>';
       foods.slice(0,6).forEach(f=>{
         const n={};(f.foodNutrients||[]).forEach(x=>{n[x.nutrientName]=x.value;});
         const cal=Math.round(n['Energy']||n['Energy (Atwater General Factors)']||0);
         const pro=Math.round(n['Protein']||0);
         const carb=Math.round(n['Carbohydrate, by difference']||0);
         const fat=Math.round(n['Total lipid (fat)']||0);
-        const base=f.servingSize||100;
         const div=document.createElement('div');div.className='sri';
         div.innerHTML=`<div style="flex:1;min-width:0"><div class="sri-name">${f.description}</div><div class="sri-pills"><span class="pill" style="background:var(--cbg);color:var(--calories)">${cal} cal</span><span class="pill" style="background:var(--pbg);color:var(--protein)">${pro}g pro</span><span class="pill" style="background:var(--kbg);color:var(--carbs)">${carb}g carbs</span><span class="pill" style="background:var(--fbg);color:var(--fat)">${fat}g fat</span></div></div>`;
         div.onclick=()=>{
-          addLogEntry({name:f.description.length>44?f.description.slice(0,44)+'…':f.description,calories:cal,protein:pro,carbs:carb,fat});
-          input.value='';rd.style.display='none';
-          document.getElementById('logMode').textContent='AI lookup';
+          pendingEntry={name:f.description.length>44?f.description.slice(0,44)+'…':f.description,calories:cal,protein:pro,carbs:carb,fat};
+          rd.style.display='none';
+          showConfirm(pendingEntry);
         };
         rd.appendChild(div);
       });
     }catch(e){rd.innerHTML='<div class="sempty">Search failed — check your connection</div>';}
-    document.getElementById('logMode').textContent='Add your API key for smarter lookup';
+    document.getElementById('logMode').textContent='Add API key for smarter lookup';
   }
-  btn.textContent='Log it';btn.disabled=false;
+  btn.textContent='Search';btn.disabled=false;
+}
+
+function showConfirm(entry){
+  document.getElementById('confirmName').textContent=entry.name;
+  document.getElementById('confirmPills').innerHTML=
+    `<span class="pill" style="background:var(--cbg);color:var(--calories)">${Math.round(entry.calories)} cal</span>
+     <span class="pill" style="background:var(--pbg);color:var(--protein)">${Math.round(entry.protein)}g protein</span>
+     <span class="pill" style="background:var(--kbg);color:var(--carbs)">${Math.round(entry.carbs)}g carbs</span>
+     <span class="pill" style="background:var(--fbg);color:var(--fat)">${Math.round(entry.fat)}g fat</span>`;
+  document.getElementById('confirmCard').style.display='block';
+}
+
+function confirmLog(){
+  if(!pendingEntry)return;
+  addLogEntry(pendingEntry);
+  pendingEntry=null;
+  document.getElementById('confirmCard').style.display='none';
+  document.getElementById('foodInput').value='';
+}
+
+function cancelLog(){
+  document.getElementById('confirmCard').style.display='none';
+  pendingEntry=null;
+  // Return focus to input so user can edit
+  document.getElementById('foodInput').focus();
 }
 
 function addLogEntry(entry){
@@ -682,7 +719,7 @@ document.getElementById('stCal').value=targets.calories;document.getElementById(
 if(claudeKey())document.getElementById('claudeSt').textContent='✓ Connected';
 if(localStorage.getItem('fg_usda_key'))document.getElementById('usdaSt').textContent='✓ Custom key set';
 const ep=Math.floor((streak.weeks||0)/4);if((streak.protects||0)<ep){streak.protects=ep;ss('fg_streak',streak);renderStreakUI();}
-document.getElementById('foodInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();logFood();}});
+document.getElementById('foodInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();lookupFood();}});
 document.getElementById('wlinput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();logEx();}});
 </script>
 </body>
