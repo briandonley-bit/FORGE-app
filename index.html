@@ -255,12 +255,12 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF P
   <div class="fsec">
     <div class="slabel">Log food</div>
     <div class="sbox">
-      <textarea class="sinput" id="foodInput" placeholder="Describe what you ate — e.g. New Zealand whey vanilla shake with 8oz whole milk…" autocomplete="off" rows="2" style="padding:14px;min-height:64px;resize:none;width:100%;display:block;"></textarea>
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:0.5px solid var(--border);">
-        <div style="font-size:12px;color:var(--text3)" id="logMode">AI lookup</div>
-        <button class="sbtn" id="logFoodBtn" onclick="lookupFood()" style="border-radius:8px;height:38px;padding:0 18px;">Search</button>
+      <textarea class="sinput" id="foodInput" placeholder="Be specific for best accuracy — include quantity, brand, and preparation. e.g. 1 scoop (32g) NZ Whey vanilla + 240ml whole milk, or 200g grilled chicken breast…" autocomplete="off" rows="3" style="padding:14px;min-height:80px;resize:none;width:100%;display:block;"></textarea>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-top:1px solid var(--border);background:var(--bg3);">
+        <div style="font-size:11px;color:var(--text3);line-height:1.4;">💡 Include weight, brand &amp; cooking method for best accuracy</div>
+        <button class="sbtn" id="logFoodBtn" onclick="lookupFood()" style="border-radius:8px;height:36px;padding:0 16px;font-size:13px;flex-shrink:0;margin-left:10px;">Search</button>
       </div>
-      <div id="searchResults" style="display:none"></div>
+      <div id="logMode" style="display:none"></div><div id="searchResults" style="display:none"></div>
       <!-- CONFIRM CARD -->
       <div id="confirmCard" style="display:none;border-top:1px solid var(--border);padding:14px 16px;background:var(--bg3);">
         <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.7px;color:var(--text3);margin-bottom:8px;">Review before logging</div>
@@ -690,6 +690,8 @@ function addLogEntry(entry){
   ss('fg_prefs',prefs);renderPrefTags();
   updateNutritionUI();showToast('Added: '+entry.name.slice(0,28));
   document.getElementById('searchResults').style.display='none';
+  // Refresh history so Body tab stays current
+  renderHistory();
 }
 
 // AI RECOMMENDATIONS with recipe links
