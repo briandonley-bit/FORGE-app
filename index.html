@@ -214,6 +214,10 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF P
 /* PERIOD BUTTONS */
 .period-btn{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:7px 16px;font-size:13px;font-weight:600;color:var(--text3);cursor:pointer;}
 .period-btn.active{background:var(--accent);color:#FFF;border-color:var(--accent);}
+
+/* RESET MODAL */
+#resetModal{display:none;}
+#resetModal.show{display:flex;}
 /* TOAST */
 .toast{position:fixed;bottom:calc(80px + var(--sb) + 10px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--text);border-radius:20px;padding:9px 18px;font-size:13px;color:var(--bg);opacity:0;transition:all 0.25s;z-index:999;white-space:nowrap;pointer-events:none;font-weight:500;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -499,6 +503,18 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF P
   </div>
 </div>
 
+<!-- RESET MODAL -->
+<div id="resetModal" style="display:none;position:fixed;inset:0;background:rgba(26,23,20,0.5);z-index:600;align-items:flex-end;justify-content:center;padding-bottom:calc(32px + var(--sb));" onclick="closeResetModal()">
+  <div style="background:var(--bg2);border-radius:var(--r);padding:24px;width:calc(100% - 32px);max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,0.2);" onclick="event.stopPropagation()">
+    <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:8px;">Reset today's log?</div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.5;margin-bottom:20px;">This will permanently delete all food entries logged today. This cannot be undone.</div>
+    <div style="display:flex;gap:10px;">
+      <button onclick="closeResetModal()" style="flex:1;background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-size:14px;font-weight:600;border-radius:10px;padding:13px;cursor:pointer;">Cancel</button>
+      <button onclick="confirmResetDay()" style="flex:1;background:var(--danger);color:#FFF;font-size:14px;font-weight:700;border:none;border-radius:10px;padding:13px;cursor:pointer;">Yes, reset</button>
+    </div>
+  </div>
+</div>
+
 <!-- CELEBRATION -->
 <div class="celeb" id="celeb" onclick="closeCeleb()">
   <div class="celeb-e" id="celebE">🔥</div>
@@ -522,12 +538,28 @@ let weekData={};
 let wentries=[];
 let selFood=null; // kept for USDA compat
 
-function todayKey(){return new Date().toISOString().slice(0,10);}
-function weekKey(){const d=new Date(),dy=d.getDay(),diff=d.getDate()-dy+(dy===0?-6:1);return new Date(new Date(d).setDate(diff)).toISOString().slice(0,10);}
+function todayKey(){
+  const d=new Date();
+  // Use LOCAL date, not UTC — prevents timezone-caused log resets
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,'0');
+  const day=String(d.getDate()).padStart(2,'0');
+  return y+'-'+m+'-'+day;
+}
+function weekKey(){
+  const d=new Date(),dy=d.getDay(),diff=d.getDate()-dy+(dy===0?-6:1);
+  const m=new Date(d);m.setDate(diff);
+  const y=m.getFullYear();
+  const mo=String(m.getMonth()+1).padStart(2,'0');
+  const da=String(m.getDate()).padStart(2,'0');
+  return y+'-'+mo+'-'+da;
+}
 function claudeKey(){return localStorage.getItem('fg_claude_key')||'';}
 function usdaKey(){return localStorage.getItem('fg_usda_key')||'DEMO_KEY';}
 
+let _lastLoadedDay=todayKey();
 function loadAll(){
+  _lastLoadedDay=todayKey();
   todayLog=gs('fg_log_'+todayKey(),[]);
   weekData=gs('fg_week_'+weekKey(),{});
   wentries=gs('fg_wlog_'+todayKey(),[]);
@@ -573,7 +605,23 @@ function renderLog(){
 }
 
 function delEntry(i){todayLog.splice(i,1);ss('fg_log_'+todayKey(),todayLog);updateNutritionUI();showToast('Removed');}
-function resetDay(){if(!confirm('Reset today\'s food log?'))return;todayLog=[];ss('fg_log_'+todayKey(),todayLog);updateNutritionUI();document.getElementById('recoOut').innerHTML='';showToast('Day reset');}
+function resetDay(){showResetModal();}
+
+function showResetModal(){
+  document.getElementById('resetModal').classList.add('show');
+}
+function closeResetModal(){
+  document.getElementById('resetModal').classList.remove('show');
+}
+function confirmResetDay(){
+  todayLog=[];
+  ss('fg_log_'+todayKey(),todayLog);
+  updateNutritionUI();
+  document.getElementById('recoOut').innerHTML='';
+  closeResetModal();
+  showToast('Day reset');
+  renderHistory();
+}
 
 // FOOD LOGGING — Search first, confirm then log
 let pendingEntry = null;
@@ -1023,6 +1071,17 @@ document.getElementById('stCal').value=targets.calories;document.getElementById(
 if(claudeKey())document.getElementById('claudeSt').textContent='✓ Connected';
 if(localStorage.getItem('fg_usda_key'))document.getElementById('usdaSt').textContent='✓ Custom key set';
 const ep=Math.floor((streak.weeks||0)/4);if((streak.protects||0)<ep){streak.protects=ep;ss('fg_streak',streak);renderStreakUI();}
+// Reload log if user switches back to app after midnight
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible'){
+    const newKey=todayKey();
+    if(newKey!==_lastLoadedDay){
+      _lastLoadedDay=newKey;
+      loadAll();updateNutritionUI();renderWEntries();
+      showToast('New day started — log refreshed');
+    }
+  }
+});
 document.getElementById('foodInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();lookupFood();}});
 document.getElementById('pantryInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addPantryItem();}});
 document.getElementById('wlinput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();logEx();}});
