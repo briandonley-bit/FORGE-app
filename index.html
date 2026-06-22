@@ -217,6 +217,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF P
 
 /* RESET MODAL */
 #resetModal{display:none;}
+#resetModal.show{display:flex;}
 /* TOAST */
 .toast{position:fixed;bottom:calc(80px + var(--sb) + 10px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--text);border-radius:20px;padding:9px 18px;font-size:13px;color:var(--bg);opacity:0;transition:all 0.25s;z-index:999;white-space:nowrap;pointer-events:none;font-weight:500;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -503,7 +504,7 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF P
 </div>
 
 <!-- RESET MODAL -->
-<div id="resetModal" style="position:fixed;inset:0;background:rgba(26,23,20,0.5);z-index:600;align-items:flex-end;justify-content:center;padding-bottom:calc(32px + var(--sb));" onclick="closeResetModal()">
+<div id="resetModal" style="display:none;position:fixed;inset:0;background:rgba(26,23,20,0.5);z-index:600;align-items:flex-end;justify-content:center;padding-bottom:calc(32px + var(--sb));" onclick="closeResetModal()">
   <div style="background:var(--bg2);border-radius:var(--r);padding:24px;width:calc(100% - 32px);max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,0.2);" onclick="event.stopPropagation()">
     <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:8px;">Reset today's log?</div>
     <div style="font-size:14px;color:var(--text2);line-height:1.5;margin-bottom:20px;">This will permanently delete all food entries logged today. This cannot be undone.</div>
@@ -607,12 +608,10 @@ function delEntry(i){todayLog.splice(i,1);ss('fg_log_'+todayKey(),todayLog);upda
 function resetDay(){showResetModal();}
 
 function showResetModal(){
-  const m=document.getElementById('resetModal');
-  m.style.display='flex';
+  document.getElementById('resetModal').classList.add('show');
 }
 function closeResetModal(){
-  const m=document.getElementById('resetModal');
-  m.style.display='none';
+  document.getElementById('resetModal').classList.remove('show');
 }
 function confirmResetDay(){
   todayLog=[];
